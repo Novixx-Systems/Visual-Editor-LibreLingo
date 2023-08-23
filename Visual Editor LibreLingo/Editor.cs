@@ -130,6 +130,10 @@ namespace Visual_Editor_LibreLingo
         private void listBox3_DoubleClick(object sender, EventArgs e)
         {
             // Load lesson into property grid
+            if (listBox3.SelectedIndex == -1)
+            {
+                return;
+            }
             propertyGrid1.SelectedObject = lessons[listBox3.SelectedIndex];
         }
 
@@ -227,6 +231,11 @@ namespace Visual_Editor_LibreLingo
         private void button3_Click(object sender, EventArgs e)
         {
             // Remove lesson
+            if (listBox3.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select a lesson to remove.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             lessons.RemoveAt(listBox3.SelectedIndex);
             listBox3.Items.RemoveAt(listBox3.SelectedIndex);
         }
