@@ -9,6 +9,7 @@ namespace Visual_Editor_LibreLingo
         public string LessonName { get; set; }
         public string SourceLanguage { get; set; }
         public string TargetLanguage { get; set; }
+        dynamic lessonObj;
         public List<Lesson> lessons = new List<Lesson>();
         public Editor()
         {
@@ -40,7 +41,7 @@ namespace Visual_Editor_LibreLingo
                     Deserializer deserializer = new Deserializer();
                     // Deserialize the lesson
                     string lessonYaml = File.ReadAllText(lesson);
-                    dynamic lessonObj = deserializer.Deserialize<dynamic>(lessonYaml);
+                    lessonObj = deserializer.Deserialize<dynamic>(lessonYaml);
 
                     foreach (dynamic a in lessonObj["Mini-dictionary"][SourceLanguage])
                     {
@@ -109,6 +110,41 @@ namespace Visual_Editor_LibreLingo
         {
             // Load lesson into property grid
             propertyGrid1.SelectedObject = lessons[listBox3.SelectedIndex];
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            // Save yaml
+            foreach (object obj in lessons)
+            {
+                Lesson lesson = (Lesson)obj;
+                lessonObj["New words"] = new List<object>();
+                foreach (Lesson lesson1 in lessons)
+                {
+                    Dictionary<object, object> word = new Dictionary<object, object>();
+                    word.Add("Word", lesson1.Name);
+                    word.Add("Translation", lesson1.AcceptedWords);
+                    if (lesson1.OtherAcceptedWords.Count > 0)
+                    {
+                        word.Add("Also accepted", lesson1.OtherAcceptedWords);
+                    }
+                    if (lesson1.ListOfImageNames.Count > 0)
+                    {
+                        word.Add("Images", lesson1.ListOfImageNames);
+                    }
+                    lessonObj["New words"].Add(word);
+                }
+            }
+            foreach (string lesson in Directory.GetFiles(Form1.projectPath + "\\basics\\skills"))
+            {
+                if (lesson.EndsWith("\\" + LessonName.ToLower() + ".yaml", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    // Serialize the lesson
+                    Serializer serializer = new Serializer();
+                    string lessonYaml = serializer.Serialize(lessonObj);
+                    File.WriteAllText(lesson, lessonYaml);
+                }
+            }
         }
     }
 }

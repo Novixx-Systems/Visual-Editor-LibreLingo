@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             listBox1 = new ListBox();
             listBox2 = new ListBox();
             label1 = new Label();
@@ -35,6 +36,7 @@
             label2 = new Label();
             propertyGrid1 = new PropertyGrid();
             listBox3 = new ListBox();
+            timer1 = new System.Windows.Forms.Timer(components);
             SuspendLayout();
             // 
             // listBox1
@@ -102,6 +104,12 @@
             listBox3.TabIndex = 7;
             listBox3.DoubleClick += listBox3_DoubleClick;
             // 
+            // timer1
+            // 
+            timer1.Enabled = true;
+            timer1.Interval = 1500;
+            timer1.Tick += timer1_Tick;
+            // 
             // Editor
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -129,5 +137,6 @@
         private Label label2;
         private PropertyGrid propertyGrid1;
         private ListBox listBox3;
+        private System.Windows.Forms.Timer timer1;
     }
 }
