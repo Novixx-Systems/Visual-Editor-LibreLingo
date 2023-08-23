@@ -21,6 +21,10 @@ namespace Visual_Editor_LibreLingo
                 projectPath = fbd.SelectedPath;
                 // Add all YAML files to the tree view
                 treeView1.Nodes.Clear();
+                while (tabControl1.TabCount > 1) // This is a hack to remove all tabs except the home tab
+                {
+                    tabControl1.TabPages.RemoveAt(1);
+                }
 
                 YamlDotNet.Serialization.Deserializer deserializer = new YamlDotNet.Serialization.Deserializer();
 

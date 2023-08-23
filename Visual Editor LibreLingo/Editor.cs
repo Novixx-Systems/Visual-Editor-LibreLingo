@@ -23,7 +23,7 @@ namespace Visual_Editor_LibreLingo
 
             if (w1 != "")
             {
-                listBox1.Items.Add(w1 + " -> " + w2);
+                listBox2.Items.Add(w1 + " -> " + w2);
             }
             if (w2 != "")
             {
@@ -210,9 +210,25 @@ namespace Visual_Editor_LibreLingo
             if (name != "")
             {
                 Lesson lesson = new Lesson(name, Convert.ToInt32(type), "", new List<string>(), new List<string>());
+                if (type == "1")
+                {
+                    lesson.OtherAcceptedWords = new List<string>();
+                    lesson.ListOfImageNames = new List<string>();
+                }
+                else if (type == "2")
+                {
+                    lesson.AlternateTranslation = new List<string>();
+                }
                 lessons.Add(lesson);
                 listBox3.Items.Add(name);
             }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            // Remove lesson
+            lessons.RemoveAt(listBox3.SelectedIndex);
+            listBox3.Items.RemoveAt(listBox3.SelectedIndex);
         }
     }
 }
