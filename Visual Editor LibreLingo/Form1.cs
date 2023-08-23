@@ -44,6 +44,7 @@ namespace Visual_Editor_LibreLingo
                 // Add all the lessons to the tree view
                 foreach (string lesson in Directory.GetFiles(fbd.SelectedPath + "\\basics\\skills"))
                 {
+                    if (lesson == null) continue;
                     // Deserialize the lesson
                     string lessonYaml = File.ReadAllText(lesson);
                     dynamic lessonObj = deserializer.Deserialize<dynamic>(lessonYaml);

@@ -41,7 +41,7 @@
             // 
             treeView1.Location = new Point(0, 1);
             treeView1.Name = "treeView1";
-            treeView1.Size = new Size(165, 580);
+            treeView1.Size = new Size(165, 641);
             treeView1.TabIndex = 0;
             treeView1.DoubleClick += treeView1_DoubleClick;
             // 
@@ -52,7 +52,7 @@
             tabPage1.Location = new Point(4, 24);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(643, 552);
+            tabPage1.Size = new Size(1079, 613);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Home Page";
             tabPage1.UseVisualStyleBackColor = true;
@@ -83,14 +83,14 @@
             tabControl1.Location = new Point(165, 1);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(651, 580);
+            tabControl1.Size = new Size(1087, 641);
             tabControl1.TabIndex = 1;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(814, 581);
+            ClientSize = new Size(1251, 646);
             Controls.Add(tabControl1);
             Controls.Add(treeView1);
             Name = "Form1";

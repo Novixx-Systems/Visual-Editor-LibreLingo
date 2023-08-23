@@ -13,6 +13,9 @@ namespace Visual_Editor_LibreLingo
         public string AcceptedWords { get; set; }
         public List<string> OtherAcceptedWords { get; set; }
         public List<string> ListOfImageNames { get; set; }
+        public string Phrase { get; set; }
+        public string Translation { get; set; }
+        public List<string> AlternateTranslation { get; set; }
 
         public Lesson(string name, int type, string acceptedWords, List<string> otherAcceptedWords, List<string> listOfImageNames)
         {

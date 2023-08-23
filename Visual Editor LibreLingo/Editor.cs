@@ -94,7 +94,28 @@ namespace Visual_Editor_LibreLingo
                         {
                             images.Add(obj.ToString());
                         }
-                        Lesson lessona = new Lesson(word["Word"].ToString(), 0, word["Translation"].ToString(), alsoAccepted, images);
+                        Lesson lessona = new Lesson(word["Word"].ToString(), 1, word["Translation"].ToString(), alsoAccepted, images);
+                        lessons.Add(lessona);
+                    }
+                    foreach (dynamic sentence in lessonObj["Phrases"])
+                    {
+                        List<object> altTrans = new List<object>();
+                        if (sentence.ContainsKey("Alternative versions"))
+                        {
+                            foreach (dynamic a in sentence["Alternative versions"])
+                            {
+                                altTrans.Add(a);
+                            }
+                        }
+                        List<string> alternateTranslation = new List<string>();
+                        foreach (object obj in altTrans)
+                        {
+                            alternateTranslation.Add(obj.ToString());
+                        }
+                        Lesson lessona = new Lesson(sentence["Phrase"].ToString(), 2, sentence["Translation"].ToString(), alternateTranslation, alternateTranslation);
+                        lessona.Phrase = sentence["Phrase"].ToString();
+                        lessona.Translation = sentence["Translation"].ToString();
+                        lessona.AlternateTranslation = alternateTranslation;
                         lessons.Add(lessona);
                     }
                 }
@@ -119,21 +140,51 @@ namespace Visual_Editor_LibreLingo
             {
                 Lesson lesson = (Lesson)obj;
                 lessonObj["New words"] = new List<object>();
+                lessonObj["Phrases"] = new List<object>();
                 foreach (Lesson lesson1 in lessons)
                 {
-                    Dictionary<object, object> word = new Dictionary<object, object>();
-                    word.Add("Word", lesson1.Name);
-                    word.Add("Translation", lesson1.AcceptedWords);
-                    if (lesson1.OtherAcceptedWords.Count > 0)
+                    if (lesson1.Type == 1)
                     {
-                        word.Add("Also accepted", lesson1.OtherAcceptedWords);
+                        Dictionary<object, object> word = new Dictionary<object, object>();
+                        word.Add("Word", lesson1.Name);
+                        word.Add("Translation", lesson1.AcceptedWords);
+                        if (lesson1.OtherAcceptedWords.Count > 0)
+                        {
+                            word.Add("Also accepted", lesson1.OtherAcceptedWords);
+                        }
+                        if (lesson1.ListOfImageNames.Count > 0)
+                        {
+                            word.Add("Images", lesson1.ListOfImageNames);
+                        }
+                        lessonObj["New words"].Add(word);
                     }
-                    if (lesson1.ListOfImageNames.Count > 0)
+                    else if (lesson1.Type == 2)
                     {
-                        word.Add("Images", lesson1.ListOfImageNames);
+                        Dictionary<object, object> sentence = new Dictionary<object, object>();
+                        sentence.Add("Phrase", lesson1.Phrase);
+                        sentence.Add("Translation", lesson1.Translation);
+                        if (lesson1.AlternateTranslation.Count > 0)
+                        {
+                            sentence.Add("Alternative versions", lesson1.AlternateTranslation);
+                        }
+                        lessonObj["Phrases"].Add(sentence);
                     }
-                    lessonObj["New words"].Add(word);
                 }
+            }
+            // Update words
+            lessonObj["Mini-dictionary"][SourceLanguage] = new List<object>();
+            foreach (string item in listBox1.Items)
+            {
+                Dictionary<object, object> word = new Dictionary<object, object>();
+                word.Add(item.Split(new string[] { " -> " }, StringSplitOptions.None)[0], item.Split(new string[] { " -> " }, StringSplitOptions.None)[1]);
+                lessonObj["Mini-dictionary"][SourceLanguage].Add(word);
+            }
+            lessonObj["Mini-dictionary"][TargetLanguage] = new List<object>();
+            foreach (string item in listBox2.Items)
+            {
+                Dictionary<object, object> word = new Dictionary<object, object>();
+                word.Add(item.Split(new string[] { " -> " }, StringSplitOptions.None)[0], item.Split(new string[] { " -> " }, StringSplitOptions.None)[1]);
+                lessonObj["Mini-dictionary"][TargetLanguage].Add(word);
             }
             foreach (string lesson in Directory.GetFiles(Form1.projectPath + "\\basics\\skills"))
             {
@@ -144,6 +195,23 @@ namespace Visual_Editor_LibreLingo
                     string lessonYaml = serializer.Serialize(lessonObj);
                     File.WriteAllText(lesson, lessonYaml);
                 }
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            // Add new lesson
+            string name = Interaction.InputBox("Name of the lesson:", "Add lesson", "", -1, -1);
+            string type = Interaction.InputBox("Type of the lesson (1 = words, 2 = sentences):", "Add lesson", "", -1, -1);
+            while (type != "1" && type != "2")
+            {
+                type = Interaction.InputBox("Type of the lesson (1 = words, 2 = sentences):", "Add lesson", "", -1, -1);
+            }
+            if (name != "")
+            {
+                Lesson lesson = new Lesson(name, Convert.ToInt32(type), "", new List<string>(), new List<string>());
+                lessons.Add(lesson);
+                listBox3.Items.Add(name);
             }
         }
     }
