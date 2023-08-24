@@ -61,6 +61,7 @@ namespace Visual_Editor_LibreLingo
 
         private void treeView1_DoubleClick(object sender, EventArgs e)
         {
+            if (treeView1.SelectedNode == null) return;
             // Check if the user double clicked on a lesson
             if (treeView1.SelectedNode.Level == 1)
             {

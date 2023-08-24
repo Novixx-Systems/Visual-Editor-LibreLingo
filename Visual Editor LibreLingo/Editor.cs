@@ -160,6 +160,16 @@ namespace Visual_Editor_LibreLingo
                         {
                             word.Add("Images", lesson1.ListOfImageNames);
                         }
+                        else if (lesson1.ListOfImageNames.Count == 0)
+                        {
+                            // Add default images
+                            word.Add("Images", new List<string>()
+                            {
+                                "and1",
+                                "and2",
+                                "and3"
+                            });
+                        }
                         lessonObj["New words"].Add(word);
                     }
                     else if (lesson1.Type == 2)
