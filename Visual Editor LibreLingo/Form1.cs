@@ -1,3 +1,5 @@
+using Microsoft.VisualBasic;
+
 namespace Visual_Editor_LibreLingo
 {
     public partial class Form1 : Form
@@ -56,6 +58,8 @@ namespace Visual_Editor_LibreLingo
                     // Add the lesson to the tree view
                     treeView1.Nodes[0].Nodes.Add(lessonObj["Skill"]["Name"]);
                 }
+                // Add context menu to the tree view
+                treeView1.ContextMenuStrip = contextMenuStrip1;
             }
         }
 
@@ -78,6 +82,20 @@ namespace Visual_Editor_LibreLingo
                 newTab.Controls.Add(editor);
 
             }
+        }
+
+        private void newYAMLToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string newFileName = "basics\\skills\\" + Interaction.InputBox("Enter the name of the new YAML file.", "New YAML file", "new.yaml");
+            if (newFileName == "basics\\skills\\") return; // The user clicked cancel or didn't enter a name
+            // Create the new YAML file
+            File.Create(projectPath + "\\" + newFileName).Close();
+            // Add the content to the new YAML file
+            File.WriteAllText(projectPath + "\\" + newFileName, @"Skill:
+  Name: " + newFileName.Replace(".yaml", "", StringComparison.CurrentCultureIgnoreCase).Replace("basics\\skills\\", "", StringComparison.CurrentCultureIgnoreCase) + @"
+  Id: " + new Random().Next(100, 999999) + @"");
+            // Add the new YAML file to the tree view
+            treeView1.Nodes[0].Nodes.Add(newFileName.Replace(".yaml", "", StringComparison.CurrentCultureIgnoreCase).Replace("basics\\skills\\", "", StringComparison.CurrentCultureIgnoreCase));
         }
     }
 }

@@ -43,6 +43,14 @@ namespace Visual_Editor_LibreLingo
                     string lessonYaml = File.ReadAllText(lesson);
                     lessonObj = deserializer.Deserialize<dynamic>(lessonYaml);
 
+                    if (!lessonObj.ContainsKey("Mini-dictionary"))
+                    {
+                        // Add the mini-dictionary to the lesson (incluing the source and target languages)
+                        lessonObj.Add("Mini-dictionary", new Dictionary<object, object>());
+                        lessonObj["Mini-dictionary"].Add(SourceLanguage, new List<object>());
+                        lessonObj["Mini-dictionary"].Add(TargetLanguage, new List<object>());
+                    }
+
                     foreach (dynamic a in lessonObj["Mini-dictionary"][SourceLanguage])
                     {
                         listBox1.Items.Add(((KeyCollection)a.Keys).ToArray().ElementAt(0) + " -> " + ((ValueCollection)a.Values).ToArray().ElementAt(0));
@@ -65,6 +73,14 @@ namespace Visual_Editor_LibreLingo
                     - dog2
                     - dog3
                     */
+
+                    if (!lessonObj.ContainsKey("New words"))
+                    {
+                        lessonObj.Add("New words", new List<object>());
+                        lessonObj["New words"].Add(new Dictionary<object, object>()
+                        {
+{ "Word", "Test" }, { "Translation", "Tset" }, { "Also accepted", new List<object>() { "test2" } }, { "Images", new List<object>() { "dog1", "dog2", "dog3" } } });
+                    }
 
                     foreach (dynamic word in lessonObj["New words"])
                     {
@@ -96,6 +112,14 @@ namespace Visual_Editor_LibreLingo
                         }
                         Lesson lessona = new Lesson(word["Word"].ToString(), 1, word["Translation"].ToString(), alsoAccepted, images);
                         lessons.Add(lessona);
+                    }
+                    if (!lessonObj.ContainsKey("Phrases"))
+                    {
+                        lessonObj.Add("Phrases", new List<object>());
+                        lessonObj["Phrases"].Add(new Dictionary<object, object>()
+                        {
+                              { "Phrase", "Test" }, { "Translation", "Tset" }, { "Alternative versions", new List<object>() { "test2" } }
+                        });
                     }
                     foreach (dynamic sentence in lessonObj["Phrases"])
                     {

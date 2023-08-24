@@ -28,13 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             treeView1 = new TreeView();
             tabPage1 = new TabPage();
             button1 = new Button();
             label1 = new Label();
             tabControl1 = new TabControl();
+            contextMenuStrip1 = new ContextMenuStrip(components);
+            newYAMLToolStripMenuItem = new ToolStripMenuItem();
             tabPage1.SuspendLayout();
             tabControl1.SuspendLayout();
+            contextMenuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // treeView1
@@ -86,6 +90,19 @@
             tabControl1.Size = new Size(1087, 641);
             tabControl1.TabIndex = 1;
             // 
+            // contextMenuStrip1
+            // 
+            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { newYAMLToolStripMenuItem });
+            contextMenuStrip1.Name = "contextMenuStrip1";
+            contextMenuStrip1.Size = new Size(181, 48);
+            // 
+            // newYAMLToolStripMenuItem
+            // 
+            newYAMLToolStripMenuItem.Name = "newYAMLToolStripMenuItem";
+            newYAMLToolStripMenuItem.Size = new Size(180, 22);
+            newYAMLToolStripMenuItem.Text = "New YAML";
+            newYAMLToolStripMenuItem.Click += newYAMLToolStripMenuItem_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -98,6 +115,7 @@
             tabPage1.ResumeLayout(false);
             tabPage1.PerformLayout();
             tabControl1.ResumeLayout(false);
+            contextMenuStrip1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -108,5 +126,7 @@
         private Label label1;
         private TabControl tabControl1;
         private Button button1;
+        private ContextMenuStrip contextMenuStrip1;
+        private ToolStripMenuItem newYAMLToolStripMenuItem;
     }
 }
