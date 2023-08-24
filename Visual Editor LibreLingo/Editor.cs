@@ -209,8 +209,19 @@ namespace Visual_Editor_LibreLingo
                     }
                 }
             }
+            if (lessonObj == null)
+            {
+                return;
+            }
             // Update words
-            lessonObj["Mini-dictionary"][SourceLanguage] = new List<object>();
+            if (lessonObj.ContainsKey("Mini-dictionary"))
+            {
+                lessonObj["Mini-dictionary"] = new Dictionary<object, object>();
+            }
+            else
+            {
+                lessonObj.Add("Mini-dictionary", new Dictionary<object, object>());
+            }
             foreach (string item in listBox1.Items)
             {
                 Dictionary<object, object> word = new Dictionary<object, object>();

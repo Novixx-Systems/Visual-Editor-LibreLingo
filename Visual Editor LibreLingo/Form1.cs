@@ -88,6 +88,7 @@ namespace Visual_Editor_LibreLingo
         {
             string newFileName = "basics\\skills\\" + Interaction.InputBox("Enter the name of the new YAML file.", "New YAML file", "new.yaml");
             if (newFileName == "basics\\skills\\") return; // The user clicked cancel or didn't enter a name
+            if (newFileName.EndsWith(".yaml", StringComparison.CurrentCultureIgnoreCase) == false) newFileName += ".yaml"; // Add the .yaml extension if the user didn't enter it
             // Create the new YAML file
             File.Create(projectPath + "\\" + newFileName).Close();
             // Add the content to the new YAML file
