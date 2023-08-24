@@ -217,10 +217,14 @@ namespace Visual_Editor_LibreLingo
             if (lessonObj.ContainsKey("Mini-dictionary"))
             {
                 lessonObj["Mini-dictionary"] = new Dictionary<object, object>();
+                lessonObj["Mini-dictionary"].Add(SourceLanguage, new List<object>());
+                lessonObj["Mini-dictionary"].Add(TargetLanguage, new List<object>());
             }
             else
             {
                 lessonObj.Add("Mini-dictionary", new Dictionary<object, object>());
+                lessonObj["Mini-dictionary"].Add(SourceLanguage, new List<object>());
+                lessonObj["Mini-dictionary"].Add(TargetLanguage, new List<object>());
             }
             foreach (string item in listBox1.Items)
             {
